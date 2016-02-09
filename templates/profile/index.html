@@ -54,7 +54,7 @@
 
         <div id="avatar-row" class="row">
             <div class="label">
-                <img class="avatar" src="{% if env.user.avatar %}{{ env.request.protocol }}{{ settings.avatars_root }}/80/{{env.user.avatar}}{% else %}{{ env.request.protocol }}{{settings.avatars_root}}/av80.png{% endif %}" alt="avatar"/>
+                <img class="avatar" src="{% if env.user.avatar %}{{ settings.avatars_root }}/80/{{env.user.avatar}}{% else %}{{settings.avatars_root}}/av80.png{% endif %}" alt="avatar"/>
             </div>
             <div class="value">
                 

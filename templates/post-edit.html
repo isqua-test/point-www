@@ -22,7 +22,7 @@
     {% if env.user.id %}
     <form id="post-edit-form" class="post post-form" action="/{{post.id}}/e" method="post" enctype="multipart/form-data" autocomplete="off">
         <div class="info">
-            <img class="avatar" src="{% if env.user.avatar %}{{ env.request.protocol }}{{ settings.avatars_root }}/40/{{env.user.avatar}}{% else %}/img/av40.png{% endif %}" alt="{{env.user.login}}"/>
+            <img class="avatar" src="{% if env.user.avatar %}{{ settings.avatars_root }}/40/{{env.user.avatar}}{% else %}/img/av40.png{% endif %}" alt="{{env.user.login}}"/>
             <div class="created">
                 <span>{{post.created|strftime("%d %b")}}</span>
                 <span>{{post.created|strftime("%H:%M")}}</span>
@@ -39,7 +39,7 @@
                         <div class="attaches clearfix">
                             {% for f in post.files %}
                                 <div class="postimg">
-                                    <img src="{{env.request.protocol}}{{settings.media_root}}/{{f|urlencode}}.thumb" alt="{{f|basename}}"/>
+                                    <img src="{{settings.media_root}}/{{f|urlencode}}.thumb" alt="{{f|basename}}"/>
                                     <input type="checkbox" name="del-attach" value="{{f|urlencode}}" title="Удалить {{f|basename}}"/>
                                 </div>
                             {% endfor %}

@@ -29,7 +29,7 @@
                     <h1>{{env.owner.login}}</h1>
                     {% if info.name %}<div class="name">{{info.name}}</div>{% endif %}
                 </div>
-                <img class="avatar" alt="{{env.owner.login}}" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if info.avatar %}/280/{{info.avatar}}{% else %}/av280.png{% endif %}"/>
+                <img class="avatar" alt="{{env.owner.login}}" src="{{ settings.avatars_root }}{% if info.avatar %}/280/{{info.avatar}}{% else %}/av280.png{% endif %}"/>
             </div>
             <div id="about">
                 {% if info.birthdate %}<p>Дата рождения: {{info.birthdate|strftime("%d.%m.%Y")}}</p>{% endif %}
@@ -100,7 +100,7 @@
         </div>
 
         <label class="aside-toggle" for="aside-toggle-cb">
-            <img class="avatar" alt="arts" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if info.avatar %}/24/{{info.avatar}}{% else %}/av24.png{% endif %}"/>
+            <img class="avatar" alt="arts" src="{{ settings.avatars_root }}{% if info.avatar %}/24/{{info.avatar}}{% else %}/av24.png{% endif %}"/>
             <h1>Информация</h1>
         </label>
     </div>
@@ -113,9 +113,9 @@
     <div class="post{% if p.post.private %} private{% endif %}{% if p.post.pinned %} pinned{% endif %}" data-id="{{p.post.id}}">
         <div class="info">
             {% if p.rec %}
-            <a href="//{{p.rec.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.rec.author.get_info('avatar') %}/40/{{p.rec.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.rec.author.login}}"/></a>
+            <a href="//{{p.rec.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if p.rec.author.get_info('avatar') %}/40/{{p.rec.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.rec.author.login}}"/></a>
             {% else %}
-            <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/40/{{p.post.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.post.author.login}}"/></a>
+            <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/40/{{p.post.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.post.author.login}}"/></a>
             {% endif %}
             <div class="created">
                 <span>{{p.post.created|strftime("%d %b")}}</span>
@@ -132,7 +132,7 @@
             <a href="//{{p.rec.author.login|lower}}.{{settings.domain}}/" class="user author">{{p.rec.author.login}}</a>
             {% if p.rec.text %}<div class="rtext">{{p.rec.text|markdown|safe}}</div>{% endif %}
             <div class="rec">
-                <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/24/{{p.post.author.get_info('avatar')}}{% else %}/av24.png{% endif %}" alt="{{p.post.author.login}}"/></a>
+                <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/24/{{p.post.author.get_info('avatar')}}{% else %}/av24.png{% endif %}" alt="{{p.post.author.login}}"/></a>
                 <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/" class="user rcmd">{{p.post.author.login}}</a>
             </div>
             {% else %}
@@ -145,8 +145,8 @@
             {% if p.post.files %}
             <div class="files clearfix">
                 {% for f in p.post.files %}
-                <a class="postimg" href="{{env.request.protocol}}{{ settings.media_root }}/{{ f }}">
-                    <img src="{{env.request.protocol}}{{ settings.media_root }}/{{ f }}.thumb" alt="{{ f|basename }}"/>
+                <a class="postimg" href="{{ settings.media_root }}/{{ f }}">
+                    <img src="{{ settings.media_root }}/{{ f }}.thumb" alt="{{ f|basename }}"/>
                 </a>
                 {% endfor %}
             </div>
@@ -264,7 +264,7 @@
 {% block templates %}
     <script type="text/x-jquery-tmpl" id="user-balloon-tmpl">
         <div class="user-balloon" id="ub-${login}">
-            <img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{{'{{'}}if avatar{{'}}'}}/40/${avatar}{{'{{'}}else{{'}}'}}/av40.png{{'{{'}}/if{{'}}'}}" alt="${login}"/>
+            <img class="avatar" src="{{ settings.avatars_root }}{{'{{'}}if avatar{{'}}'}}/40/${avatar}{{'{{'}}else{{'}}'}}/av40.png{{'{{'}}/if{{'}}'}}" alt="${login}"/>
             <div class="ub-info">
                 <a class="login" href="//${login.toLowerCase()}.{{settings.domain}}/">${login}</a>
                 <span>${name}</span>
@@ -301,7 +301,7 @@
 
     <script type="text/x-jquery-tmpl" id="user-not-found-balloon-tmpl">
         <div class="user-balloon not-found" id="ub-${login}">
-            <img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}/av40.png" alt="${login}"/>
+            <img class="avatar" src="{{ settings.avatars_root }}/av40.png" alt="${login}"/>
             <div class="ub-info">
                 Пользователь <a class="login" href="//${login.toLowerCase()}.{{settings.domain}}/">${login}</a> не найден.
             </div>
@@ -310,7 +310,7 @@
 
     <script type="text/x-jquery-tmpl forbidden" id="user-forbidden-balloon-tmpl">
         <div class="user-balloon" id="ub-${login}">
-            <img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}/av40.png" alt="${login}"/>
+            <img class="avatar" src="{{ settings.avatars_root }}/av40.png" alt="${login}"/>
             <div class="ub-info">
                 Пользователь <a class="login" href="//${login.toLowerCase()}.{{settings.domain}}/">${login}</a> скрыл свой профиль.
             </div>

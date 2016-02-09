@@ -31,7 +31,7 @@
 {% if section=='subscriptions' and env.user.id==env.owner.id %}
 {% for u in users %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -58,7 +58,7 @@
 {% else %}
 {% for u in users %}
 <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">
-    <img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/>
+    <img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/>
     <div class="info">
         <span class="user">{{u.login}}</span>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -76,7 +76,7 @@
 <div class="users">
 {% for u in env.user.incoming_subscription_requests() %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -94,7 +94,7 @@
 <div class="users">
 {% for u in env.user.outgoing_subscription_requests() %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -112,7 +112,7 @@
 <div class="users">
 {% for u in env.user.whitelist() %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -130,7 +130,7 @@
 <div class="users">
 {% for u in env.user.blacklist() %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
@@ -163,7 +163,7 @@
 <div class="users">
 {% for u in env.user.blacklisters() %}
 <div class="user">
-    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
+    <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ settings.avatars_root }}{% if u.info.avatar %}/40/{{u.info.avatar}}{% else %}/av40.png{% endif %}" alt="{{u.login}}"/></a>
     <div class="info">
         <a class="user" href="//{{u.login|lower}}.{{settings.domain}}/">{{u.login}}</a>
         {% if u.info.name %}<span class="name">{{u.info.name}}</span>{% endif %}
