@@ -52,58 +52,61 @@
         {% set unread_private_comments = env.user.unread_comments_count('private') %}
 
         <div id="header-wrap">
-            <div id="header">
-                <a id="logo"{% if not env.user.id %} class="visible"{% endif %} href="//{{settings.domain}}"><img src="/img/logo.png" alt="point.im"/></a>
+            <div id="header" class="layout">
+                <a id="logo" class="{% if not env.user.id %}visible {% endif %} layout-left" href="//{{settings.domain}}"><img src="/img/logo.png" alt="point.im"/></a>
                 {% if env.user.id %}
-                <label id="user-menu-label" for="user-menu-cb">
-                    <img class="avatar" src="{% if env.user.avatar %}{{ env.request.protocol }}{{ settings.avatars_root }}/24/{{env.user.avatar}}{% else %}/img/a/av24.png{% endif %}" alt="@{{env.user.login}}"/>
-                    <div id="name">
-                        <h1>{{ env.user.login }}</h1>
-                        <span>{{ env.user.get_info('name') }}</span>
-                    </div>
-                </label>
-                <input type="checkbox" id="user-menu-cb"/>
-                <div id="user-menu">
-                    <label id="user-menu-hide-label" for="user-menu-cb"></label>
-                    <div id="sections-menu">
-                        <a id="menu-recent"{% if section in ['recent_all', 'recent_posts', 'feeds'] and env.user==env.owner %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/recent">
+                <div class="layout-center">
+                    <label id="new-post-label" for="new-post-cb" title="Новый пост"></label>
+
+                    <label id="search-label" for="search-cb" title="Поиск"></label>
+                    <input type="checkbox" id="search-cb"/>
+                    <form class="search-form" action="//{{settings.domain}}/search">
+                        <input type="submit" value=""/>
+                        <div>
+                            <input type="text" name="text" value="{{ search_text }}" placeholder="Поиск"/>
+                        </div>
+                        <label id="search-hide-label" for="search-cb"></label>
+                    </form>
+                </div>
+                <div class="layout-right" id="header-user-panel">
+                    <label id="user-menu-label" for="user-menu-cb">
+                        <img class="avatar" src="{% if env.user.avatar %}{{ env.request.protocol }}{{ settings.avatars_root }}/24/{{env.user.avatar}}{% else %}/img/a/av24.png{% endif %}" alt="@{{env.user.login}}"/>
+                        <div id="name">
+                            <h1>{{ env.user.login }}</h1>
+                            <span>{{ env.user.get_info('name') }}</span>
+                        </div>
+                    </label>
+                    <input type="checkbox" id="user-menu-cb"/>
+                    <div id="user-menu">
+                        <label id="user-menu-hide-label" for="user-menu-cb"></label>
+                        <div id="sections-menu">
+                            <a id="menu-recent"{% if section in ['recent_all', 'recent_posts', 'feeds'] and env.user==env.owner %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/recent">
                             Лента
                             {% if unread_posts %}<span class="unread">{{unread_posts}}</span>{% endif %}
-                        </a>
-                        <a id="menu-blog"{% if section=='blog' and env.user==env.owner %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/">Блог</a>
-                        {#<a id="menu-feeds"{% if section=='feeds' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/feeds">Фиды</>#}
-                        <a id="menu-comments"{% if section=='comments' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/comments">
-                            Комментарии
-                            {% if unread_comments %}<span class="unread">{{ unread_comments }}</span>{% endif %}
-                        </a>
-                        <a id="menu-messages"{% if section=='messages' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/messages">
-                            Сообщения
-                            {% if unread_private_posts %}
-                            <span class="unread">{{unread_private_posts}}
-                                {% if unread_private_comments %}<span class="unread-comments">+{{unread_private_comments}}</span>{% endif %}
-                            </span>
-                            {% elif unread_private_comments %}
-                            <span class="unread unread-comments">{{unread_private_comments}}</span>
-                            {% endif %}
-                        </a>
-                        <a id="menu-bookmarks"{% if section=='bookmarks' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/bookmarks">Закладки</a>
+                            </a>
+                            <a id="menu-blog"{% if section=='blog' and env.user==env.owner %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/">Блог</a>
+                            {#<a id="menu-feeds"{% if section=='feeds' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/feeds">Фиды</>#}
+                            <a id="menu-comments"{% if section=='comments' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/comments">
+                                Комментарии
+                                {% if unread_comments %}<span class="unread">{{ unread_comments }}</span>{% endif %}
+                            </a>
+                            <a id="menu-messages"{% if section=='messages' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/messages">
+                                Сообщения
+                                {% if unread_private_posts %}
+                                <span class="unread">{{unread_private_posts}}
+                                    {% if unread_private_comments %}<span class="unread-comments">+{{unread_private_comments}}</span>{% endif %}
+                                </span>
+                                {% elif unread_private_comments %}
+                                <span class="unread unread-comments">{{unread_private_comments}}</span>
+                                {% endif %}
+                            </a>
+                            <a id="menu-bookmarks"{% if section=='bookmarks' %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/bookmarks">Закладки</a>
+                        </div>
+                        <a id="menu-profile" href="//{{env.user.login|lower}}.{{settings.domain}}/profile">Профиль</a>
+                        <a id="menu-logout" href="//{{env.user.login|lower}}.{{settings.domain}}/logout?csrf_token={{csrf_token()}}">Выйти</a>
                     </div>
-                    <a id="menu-profile" href="//{{env.user.login|lower}}.{{settings.domain}}/profile">Профиль</a>
-                    <a id="menu-logout" href="//{{env.user.login|lower}}.{{settings.domain}}/logout?csrf_token={{csrf_token()}}">Выйти</a>
+                    <label id="user-menu-hide-back-label" for="user-menu-cb"></label>
                 </div>
-                <label id="user-menu-hide-back-label" for="user-menu-cb"></label>
-
-                <label id="new-post-label" for="new-post-cb" title="Новый пост"></label>
-
-                <label id="search-label" for="search-cb" title="Поиск"></label>
-                <input type="checkbox" id="search-cb"/>
-                <form class="search-form" action="//{{settings.domain}}/search">
-                    <input type="submit" value=""/>
-                    <div>
-                        <input type="text" name="text" value="{{ search_text }}" placeholder="Поиск"/>
-                    </div>
-                    <label id="search-hide-label" for="search-cb"></label>
-                </form>
 
                 {% else %}
                 <div id="login-menu">
@@ -114,15 +117,17 @@
             </div>
         </div>
         <div id="subheader-wrap">
-            <div id="subheader">
-                {% block subheader %}{% endblock %}
+            <div id="subheader" class="layout">
+                <div class="layout-center">
+                    {% block subheader %}{% endblock %}
+                </div>
             </div>
         </div>
 
-        <div id="main-wrap" class="clearfix">
-            <div id="main">
+        <div id="main-wrap">
+            <div id="main" class="layout">
                 {% block left_menu %}
-                <div id="left-menu">
+                <div id="left-menu" class="layout-left">
                     {% if env.user.id %}
                         <h3 id="left-menu-my">Моё</h3>
                         <a id="menu-recent"{% if section in ['recent_all', 'recent_posts', 'feeds'] and env.user==env.owner %} class="active"{% endif %} href="//{{env.user.login|lower}}.{{settings.domain}}/recent">
@@ -165,14 +170,17 @@
                 </div>
                 {% endblock %}
 
-                <input type="checkbox" id="aside-toggle-cb"/>
-                {% block aside %}{% endblock %}
-
-                <div id="content">
+                <div id="content" class="layout-center">
                     <div class="content-wrap">
                         {% block content %}{% endblock %}
                     </div>
                 </div>
+
+                <input type="checkbox" id="aside-toggle-cb"/>
+                <div class="aside layout-right">
+                    {% block aside %}{% endblock %}
+                </div>
+
                 <a class="totophidden totophide" href="#" title="Наверх" id="scrollToTop">&#11014;</a>
             </div>
         </div>

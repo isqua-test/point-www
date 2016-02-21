@@ -22,14 +22,13 @@
 {% block aside %}
     {% if env.owner.id %}
     {% set info = env.owner.get_info() %}
-    <div class="aside">
         <div class="aside-content">
             <div class="avatar-wrap">
+                <img class="avatar" alt="{{env.owner.login}}" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if info.avatar %}/280/{{info.avatar}}{% else %}/av280.png{% endif %}"/>
                 <div class="info">
                     <h1>{{env.owner.login}}</h1>
                     {% if info.name %}<div class="name">{{info.name}}</div>{% endif %}
                 </div>
-                <img class="avatar" alt="{{env.owner.login}}" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if info.avatar %}/280/{{info.avatar}}{% else %}/av280.png{% endif %}"/>
             </div>
             <div id="about">
                 {% if info.birthdate %}<p>Дата рождения: {{info.birthdate|strftime("%d.%m.%Y")}}</p>{% endif %}
@@ -103,7 +102,6 @@
             <img class="avatar" alt="arts" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if info.avatar %}/24/{{info.avatar}}{% else %}/av24.png{% endif %}"/>
             <h1>Информация</h1>
         </label>
-    </div>
     {% endif %}
 {% endblock %}
 

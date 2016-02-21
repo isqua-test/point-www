@@ -275,7 +275,7 @@
     }
 }*/
 
-.aside #all-tags {
+#all-tags {
     margin: 0 .5em;
     padding: .25em 24px .25em 0;
     background: url("/img/all-tags.png") right center no-repeat;
@@ -534,7 +534,7 @@ label[for^="edit-"] {
     margin: 1em 0;
 }
 
-.pager #more {
+#more {
     display: none;
 }
 
@@ -547,13 +547,13 @@ label[for^="edit-"] {
     background-size: 19px 19px !important;
 }
 
-.pager #newer {
+#newer {
     float: left;
     padding-left: 28px;
     background: url("/img/garl.png") left center no-repeat;
 }
 
-.pager #older {
+#older {
     float: right;
     padding-right: 28px;
     background: url("/img/garr.png") right center no-repeat;
@@ -569,18 +569,18 @@ label[for^="edit-"] {
     }
 }
 
-#post-edit-form #text-input {
+#text-input {
     width: 100%;
     height: 10em;
     margin: 0 0 1em 0;
 }
 
-#post-edit-form #tags-input {
+#tags-input {
     width: 100%;
     height: 3em;
 }
 
-#post-edit-form #post-private-label {
+#post-private-label {
     float: left;
     padding: .25em;
 }
@@ -616,9 +616,8 @@ label[for^="edit-"] {
 
 .aside .avatar-wrap {
     position: relative;
-    width: 300px;
-    max-width: 100%;
-    max-height: 300px;
+    width: 100%;
+    padding-bottom: 100%;
     overflow: hidden;
 }
 
@@ -631,15 +630,14 @@ label[for^="edit-"] {
 
 .aside .avatar-wrap .info {
     position: absolute;
-    z-index: 2;
     width: 100%;
-    padding: .5em 1em;
     box-sizing: border-box;
     background: rgba(0,0,0,.25);
 }
 
 .aside .avatar-wrap .info h1 {
     margin: 0;
+    padding: .5em 1em;
     font-size: 1.2em;
     color: #ffffff;
     max-width: 100%;
@@ -664,7 +662,9 @@ label[for^="edit-"] {
 }
 
 .aside .avatar-wrap .avatar {
+    position: absolute;
     width: 100%;
+    height: 100%;
 }
 
 .aside #about {
