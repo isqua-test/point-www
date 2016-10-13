@@ -19,14 +19,21 @@ var clear_post_input = true;
 {% macro comments_list(comments) %}
     {% for c in comments %}
     <a name="{{c.id}}"></a>
-    <div class="post{% if c.is_rec %} recommendation{% endif %}{% if c.unread %} unread{% endif %}" data-id="{{post.id}}" data-comment-id="{{c.id}}"{% if c.to_comment_id %} data-to-comment-id="{{c.to_comment_id}}"{% endif %}>
-        <div class="info">
+    <article class="post{% if c.is_rec %} recommendation{% endif %}{% if c.unread %} unread{% endif %}" data-id="{{post.id}}" data-comment-id="{{c.id}}"{% if c.to_comment_id %} data-to-comment-id="{{c.to_comment_id}}"{% endif %}>
+        <header class="post-header">
             {% if c.author.id==-1 %}
-            <img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}/av24.png" alt="{{post.login}}"/>
+            <img class="post-avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}/av24.png" alt="{{post.login}}"/>
             {% else %}
-            <a href="//{{c.author.login}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if c.author.info.avatar %}/24/{{c.author.info.avatar}}{% else %}/av24.png{% endif %}" alt="{{post.login}}"/></a>
+            <a href="//{{c.author.login}}.{{settings.domain}}/"><img class="post-avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if c.author.info.avatar %}/24/{{c.author.info.avatar}}{% else %}/av24.png{% endif %}" alt="{{post.login}}"/></a>
             {% endif %}
-            <div class="created">
+
+            {% if c.author.id==-1 %}
+            <span class="post-author user anon">{{c.author.login}}</span>
+            {% else %}
+            <a href="//{{c.author.login}}.{{settings.domain}}/" class="post-author user">{{c.author.login}}</a>
+            {% endif %}
+
+            <div class="post-created">
                 <span>{{c.created|strftime("%d %b")}}</span>
                 {% if c.created|strftime("%Y")==__now__|strftime("%Y") %}
                 <span>{{c.created|strftime("%H:%M")}}</span>
@@ -34,15 +41,8 @@ var clear_post_input = true;
                 <span>{{c.created|strftime("%Y")}}</span>
                 {% endif %}
             </div>
-        </div>
+        </header>
         <div class="post-content">
-            <div class="author">
-                {% if c.author.id==-1 %}
-                <span class="user anon">{{c.author.login}}</span>
-                {% else %}
-                <a href="//{{c.author.login}}.{{settings.domain}}/" class="user">{{c.author.login}}</a>
-                {% endif %}
-            </div>
             <div class="text">
                 {{c.text|markdown(post=post.id, comment=c.id)|safe}}
             </div>
@@ -149,7 +149,7 @@ var clear_post_input = true;
             {% endif %}
             {% endif %}
         </div>
-    </div>
+    </article>
     {% if c.comments %}
     {#<input type="checkbox" id="comments-{{c.id}}"/>#}
         <div class="comments">{{ comments_list(c.comments) }}</div>
@@ -168,9 +168,12 @@ var clear_post_input = true;
     </ul>
     {% endif %}
     <div id="top-post" class="post{% if post.private %} private{% endif %}" data-id="{{post.id}}">
-        <div class="info">
-            <a href="//{{post.author.login}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if post.author.get_info("avatar") %}/40/{{post.author.get_info("avatar")}}{% else %}/av40.png{% endif %}" alt="{{post.author.login}}"/></a>
-            <div class="created">
+        <header class="post-header">
+
+            <a href="//{{post.author.login}}.{{settings.domain}}/"><img class="post-avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if post.author.get_info("avatar") %}/40/{{post.author.get_info("avatar")}}{% else %}/av40.png{% endif %}" alt="{{post.author.login}}"/></a>
+            <a href="//{{post.author.login}}.{{settings.domain}}/" class="post-author user">{{post.author.login}}</a>
+
+            <div class="post-created">
                 <span>{{post.created|strftime("%d %b")}}</span>
                 {% if post.created|strftime("%Y")==__now__|strftime("%Y") %}
                 <span>{{post.created|strftime("%H:%M")}}</span>
@@ -178,9 +181,11 @@ var clear_post_input = true;
                 <span>{{post.created|strftime("%Y")}}</span>
                 {% endif %}
             </div>
-        </div>
+        </header>
+
         <div class="post-content">
-            <a href="//{{post.author.login}}.{{settings.domain}}/" class="user author">{{post.author.login}}</a>
+            {% if post.tags %}<p class="post-tags">{% for t in post.tags %}<a class="post-tag" href="//{{post.author.login|lower}}.{{settings.domain}}/?tag={{t|urlencode}}">{{t}}</a> {% endfor %}</p>{% endif %}
+
             <div class="text">
                 {% if post.title %}<h1>{% if post.link %}<a href="{{post.link}}">{{post.title}}</a>{% else %}{{post.title}}{% endif %}</h1>{% endif %}
                 {% if env.owner.type=='feed' %}
@@ -201,7 +206,6 @@ var clear_post_input = true;
             {% if post.tune %}
             <div class="post-tune">Текущий трек: {{post.tune['artist']}} &mdash; {{post.tune['title']}}</div>
             {% endif %}
-            {% if post.tags %}<div class="tags">{% for t in post.tags %}<a class="tag" href="//{{post.author.login|lower}}.{{settings.domain}}/?tag={{t|urlencode}}">{{t}}</a>{% endfor %}</div>{% endif %}
 
             {% set rec_users = post.recommended_users() %}
             {% if rec_users %}

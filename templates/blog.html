@@ -115,37 +115,41 @@
     {% for p in posts %}
     {% if loop.index > settings.page_limit %}{% break %}{% endif %}
     <div class="post{% if p.post.private %} private{% endif %}{% if p.post.pinned %} pinned{% endif %}" data-id="{{p.post.id}}">
-        <div class="info">
+        <header class="post-header">
             {% if p.rec %}
-            <a href="//{{p.rec.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.rec.author.get_info('avatar') %}/40/{{p.rec.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.rec.author.login}}"/></a>
+                {% set author = p.rec.author %}
             {% else %}
-            <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/40/{{p.post.author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{p.post.author.login}}"/></a>
+                {% set author = p.post.author %}
             {% endif %}
-            <div class="created">
+
+            <a href="//{{author.login|lower}}.{{settings.domain}}/"><img class="post-avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if author.get_info('avatar') %}/40/{{author.get_info('avatar')}}{% else %}/av40.png{% endif %}" alt="{{author.login}}"/></a>
+            <a href="//{{author.login|lower}}.{{settings.domain}}/" class="post-author user">{{author.login}}</a>
+
+            <time class="post-created">
                 <span>{{p.post.created|strftime("%d %b")}}</span>
                 {% if p.post.created|strftime("%Y")==__now__|strftime("%Y") %}
                 <span>{{p.post.created|strftime("%H:%M")}}</span>
                 {% else %}
                 <span>{{p.post.created|strftime("%Y")}}</span>
                 {% endif %}
-            </div>
-        </div>
+            </time>
+        </header>
+
         <div class="post-content">
             {% if p.btext %}<div class="btext">{{p.btext}}</div>{% endif %}
             {% if p.rec %}
-            <a href="//{{p.rec.author.login|lower}}.{{settings.domain}}/" class="user author">{{p.rec.author.login}}</a>
-            {% if p.rec.text %}<div class="rtext">{{p.rec.text|markdown|safe}}</div>{% endif %}
-            <div class="rec">
-                <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/24/{{p.post.author.get_info('avatar')}}{% else %}/av24.png{% endif %}" alt="{{p.post.author.login}}"/></a>
-                <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/" class="user rcmd">{{p.post.author.login}}</a>
-            </div>
-            {% else %}
-            <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/" class="user author">{{p.post.author.login}}</a>
+                {% if p.rec.text %}<div class="rtext">{{p.rec.text|markdown|safe}}</div>{% endif %}
+                <div class="rec">
+                    <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/"><img class="avatar" src="{{ env.request.protocol }}{{ settings.avatars_root }}{% if p.post.author.get_info('avatar') %}/24/{{p.post.author.get_info('avatar')}}{% else %}/av24.png{% endif %}" alt="{{p.post.author.login}}"/></a>
+                    <a href="//{{p.post.author.login|lower}}.{{settings.domain}}/" class="user rcmd">{{p.post.author.login}}</a>
+                </div>
             {% endif %}
-            <div class="text"><div class="text-content">
+            {% if not p.comment_id and p.post.tags %}<p class="post-tags">{% for t in p.post.tags %}<a class="post-tag" href="//{{p.post.author.login|lower}}.{{settings.domain}}/?tag={{t|urlencode}}">{{t}}</a> {% endfor %}</p>{% endif %}
+            <div class="text">
+                <div class="text-content">
                 {% if p.post.title %}<h1>{% if p.post.link %}<a href="{{p.post.link}}">{{p.post.title}}</a>{% else %}{{p.post.title}}{% endif %}</h1>{% endif %}
                 {{p.post.text|markdown(post=p.post.id, comment=p.comment_id)|safe}}
-            </div>
+                </div>
             {% if p.post.files %}
             <div class="files clearfix">
                 {% for f in p.post.files %}
@@ -155,12 +159,11 @@
                 {% endfor %}
             </div>
             {% endif %}
-        </div>
+            </div>
             {#<div class="more-links">
                 <a class="more" href="//{{p.login|lower}}.{{settings.domain}}/{{p.id}}">Читать полностью</a>
                 <a class="less" href="//{{p.login|lower}}.{{settings.domain}}/{{p.id}}">Скрыть</a>
             </div>#}
-            {% if not p.comment_id and p.post.tags %}<div class="tags">{% for t in p.post.tags %}<a class="tag" href="//{{p.post.author.login|lower}}.{{settings.domain}}/?tag={{t|urlencode}}">{{t}}</a> {% endfor %}</div>{% endif %}
 
             <div class="clearfix">
                 <div class="post-id">
